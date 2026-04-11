@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Carga | Gestión de Ventas</title>
+    <style>
+        :root {
+            --primary: #000;
+            --success: #25d366;
+            --warning: #fbc02d;
+            --bg: #f4f4f4;
+        }
+        body { font-family: sans-serif; background: var(--bg); padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        h2 { font-size: 18px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        /* Toggle Sync WhatsApp */
+        .sync-container {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Nuevo Producto / Carga Stock</h2>
+        <form id="productForm">
+            <div class="form-group">
+                <label>Nombre del Artículo</label>
+                <input type="text" id="prodName" placeholder="Ej: Jean Oxford Elastizado" required>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Precio Mayorista ($)</label>
+                    <input type="number" id="prodPrice" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label>Stock Total (Curva)</label>
+                    <input type="number" id="prodStock" placeholder="Ej: 24">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Tipo de Disponibilidad</label>
+                <select id="prodType">
+                    <option value="inmediata">Stock Inmediato (Local)</option>
+                    <option value="demanda">A Demanda (Importación)</option>
+                    <option value="preventa">Preventa Próximo Ingreso</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Imagen (URL o Cámara)</label>
+                <input type="text" id="prodImg" placeholder="Link de la foto o subir">
+            </div>
+
+            <div class="sync-container">
+                <div>
+                    <strong style="color: #2e7d32; font-size: 14px;">Sincronizar WhatsApp</strong>
+                    <p style="font-size: 10px; margin: 0;">Se publicará automáticamente en el catálogo</p>
+                </div>
+                <input type="checkbox" id="syncWpp" checked style="width: 20px; height: 20px;">
+            </div>
+
+            <button type="submit" class="btn-submit">Publicar Producto</button>
+        </form>
+    </div>
+
+    <script src="admin-logic.js"></script>
+</body>
+</html>
