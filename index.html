@@ -3,26 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda virtual para humanos</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="main.js" defer></script>
+    <title>Store Core | White Label</title>
+    <style>
+        :root {
+            /* Paleta inspirada en Oreiro Love: Minimalismo y Elegancia */
+            --primary-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --main-bg: #ffffff;
+            --accent-color: #000000;
+            --secondary-text: #666666;
+            --border-light: #eeeeee;
+            --btn-hover: #333333;
+            --whatsapp-green: #25d366;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--primary-font);
+            background-color: var(--main-bg);
+            color: var(--accent-color);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: white;
+        }
+
+        .top-bar {
+            background: var(--accent-color);
+            color: white;
+            text-align: center;
+            font-size: 11px;
+            padding: 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .nav-links { display: flex; gap: 25px; list-style: none; }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--accent-color); 
+            font-size: 13px; 
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .nav-icons { display: flex; gap: 20px; align-items: center; }
+        .icon-btn { cursor: pointer; background: none; border: none; font-size: 18px; }
+
+        /* --- ROLE BADGE (Internal Tool) --- */
+        .role-badge {
+            background: #f0f0f0;
+            padding: 4px 8px;
+            font-size: 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 70vh;
+            background: #f5f5f5; /* Placeholder para imagen de campaña */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-content { text-align: center; }
+        .hero-title { font-size: 48px; text-transform: uppercase; letter-spacing: 8px; margin-bottom: 20px; }
+        .btn-shop {
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        .btn-shop:hover { background: var(--btn-hover); }
+
+        /* --- PRODUCT GRID --- */
+        .container { padding: 60px 5%; }
+        .section-title { text-align: center; margin-bottom: 40px; font-size: 20px; text-transform: uppercase; letter-spacing: 3px; }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card { position: relative; cursor: pointer; }
+        .product-img { width: 100%; height: 400px; background: #fafafa; object-fit: cover; margin-bottom: 15px; }
+        .product-info { text-align: left; }
+        .product-name { font-size: 14px; margin-bottom: 5px; text-transform: uppercase; }
+        .product-price { font-size: 15px; font-weight: 600; }
+        
+        .badge-demand {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #000;
+            color: #fff;
+            font-size: 10px;
+            padding: 5px 10px;
+            text-transform: uppercase;
+        }
+
+        /* --- WHATSAPP FLOATING --- */
+        .wpp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--whatsapp-green);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 2000;
+            cursor: pointer;
+        }
+
+        /* --- ADMIN/SALES BUTTONS --- */
+        .admin-controls {
+            background: #fff9c4;
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #fbc02d;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-title { font-size: 28px; }
+        }
+    </style>
 </head>
 <body>
-    <div id="cursor-dot"></div>
-    <div id="cursor-outline"></div>
 
-    
-        <main>
-            <section class="hero reveal" style="padding: 100px 0;">
-                <h1 style="font-size: 3rem; margin-bottom: 20px;">Informática para humanos.</h1>
-                <p style="color: var(--secondary); font-size: 1.1rem; max-width: 700px;">
-                    Próximamente... <strong>Tienda Virtual</strong> para <strong>humanos</strong>.
-                </p>
-            </section>
+    <div class="top-bar">Envíos a todo el país • Venta Mayorista</div>
 
-        </main>
+    <div class="admin-controls" id="admin-bar" style="display: flex;">
+        <span><strong>Módulo Venta:</strong> Gestión de Catálogo activa</span>
+        <button onclick="location.href='admin-catalog.html'" style="padding: 5px 10px; cursor:pointer;">+ Cargar Producto</button>
     </div>
+
+    <header>
+        <nav class="main-nav">
+            <div class="logo">BRAND NAME</div>
+            <ul class="nav-links">
+                <li><a href="#">New In</a></li>
+                <li><a href="#">Colección</a></li>
+                <li><a href="#">Sale</a></li>
+                <li><a href="#">Locales</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span class="role-badge">Admin Mode</span>
+                <button class="icon-btn">🔍</button>
+                <button class="icon-btn">👤</button>
+                <button class="icon-btn">👜 (0)</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">New Collection</h1>
+                <a href="#catalog" class="btn-shop">Ver Productos</a>
+            </div>
+        </section>
+
+        <section class="container" id="catalog">
+            <h2 class="section-title">Nuestros Destacados</h2>
+            <div class="product-grid">
+                
+                <div class="product-card">
+                    <div class="product-img" style="background: url('https://via.placeholder.com/300x400') center/cover;"></div>
+                    <div class="product-info">
+                        <p class="product-name">Camisa Lino Premium</p>
+                        <p class="product-price">$35.000</p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="badge-demand">Importación / A Demanda</span>
+                    <div class="product-img" style="background: url('https://via.placeholder.com/300x400') center/cover;"></div>
+                    <div class="product-info">
+                        <p class="product-name">Blazer Estructurado</p>
+                        <p class="product-price">$85.000</p>
+                    </div>
+                </div>
+
+                <div class="product-card" style="opacity: 0.6;">
+                    <span class="badge-demand" style="background: #999;">Sin Stock</span>
+                    <div class="product-img" style="background: url('https://via.placeholder.com/300x400') center/cover;"></div>
+                    <div class="product-info">
+                        <p class="product-name">Pantalón Wide Leg</p>
+                        <p class="product-price">$28.000</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <div class="wpp-float" title="Consultar Pedido">
+        <span style="color:white; font-size: 30px; font-weight: bold;">W</span>
+    </div>
+
+    <footer>
+        <div class="container" style="text-align: center; border-top: 1px solid var(--border-light); padding: 40px 0;">
+            <p style="font-size: 12px; color: var(--secondary-text);">&copy; 2026 BRAND NAME • Todos los derechos reservados</p>
+        </div>
+    </footer>
+
 </body>
 </html>
